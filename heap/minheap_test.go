@@ -2,13 +2,16 @@ package heap
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMinHeap(t *testing.T) {
 	t.Run("Insert", testInsert)
+	t.Run("Extract", testExtract)
 }
 
-func testInsert(t *testing.T) {
+func getMinHeap() *MinHeap {
 	h := NewMinHeap()
 	h.Insert(20)
 	h.Insert(2)
@@ -18,6 +21,12 @@ func testInsert(t *testing.T) {
 	h.Insert(8)
 	h.Insert(5)
 
+	return h
+}
+
+func testInsert(t *testing.T) {
+
+	h := getMinHeap()
 	l := len(h.data)
 	for i := 0; i < l; i++ {
 		left, right := (i*2)+1, (i*2)+2
@@ -30,4 +39,12 @@ func testInsert(t *testing.T) {
 		}
 
 	}
+}
+
+func testExtract(t *testing.T) {
+
+	h := getMinHeap()
+
+	assert.Equal(t, 1, h.Extract())
+	assert.Equal(t, 2, h.Extract())
 }
